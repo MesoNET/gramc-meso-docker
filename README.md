@@ -50,3 +50,20 @@ systemctl --user stop docker
 vi /etc/subuid /etc/subgid
 systemctl --start docker
 ```
+
+## Arrêter docker
+
+*A partir du compte qui exécute docker:*
+
+```
+systemctl --user stop docker
+```
+
+## Démarrer docker:
+
+*A partir du compte qui exécute docker:*
+
+```
+systemctl --user start docker
+```
+
