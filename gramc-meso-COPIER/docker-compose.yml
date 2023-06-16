@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.11
+    read_only: true
+    restart: unless-stopped
+    environment:
+      - MARIADB_ROOT_PASSWORD_FILE=/.secrets/MARIADB_ROOT_PASSWORD
+      - MARIADB_DATABASE_FILE=/.secrets/MARIADB_DATABASE
+      - MARIADB_USER_FILE=/.secrets/MARIADB_USER
+      - MARIADB_PASSWORD_FILE=/.secrets/MARIADB_PASSWORD
+      - MARIADB_AUTO_UPGRADE=yes
+    volumes:
+      - 
+          type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/db/mysql
+          target: /var/lib/mysql
+      -
+          type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/db/secrets
+          target: /.secrets
+      - 
+          type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/db/reprise
+          target: /docker-entrypoint-initdb.d
+      -
+          type: tmpfs
+          target: /var/run/mysqld
+      -
+          type: tmpfs
+          target: /tmp
+    cap_drop:
+      - ALL
+    cap_add:
+      - CAP_DAC_OVERRIDE
+      - CAP_DAC_READ_SEARCH
+      - CAP_SETUID
+      - CAP_SETGID
+      - CAP_CHOWN
+    networks:
+      - default
+
+  app:
+    build:
+      context: ./images/app
+      args:
+        GRAMCMESO_URL:  ${GRAMCMESO_URL}
+    read_only: true
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=${GRAMCMESO_URL}
+      - LETSENCRYPT_HOST=${GRAMCMESO_URL}
+      - LETSENCRYPT_TEST=${LETSENCRYPT_TEST}
+    cap_drop:
+      - ALL
+    cap_add:
+      - CAP_NET_RAW
+      - CAP_NET_BIND_SERVICE
+      - CAP_SETUID
+      - CAP_SETGID
+      - CAP_CHOWN
+
+    volumes:
+      -
+          type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/app/.env
+          target: /app/gramc-meso/.env
+      -
+          type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/app/gramc-meso.conf
+          target: /etc/apache2/sites-available/gramc-meso.conf
+      -
+          type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/app/var-log
+          target: /var/log
+      -
+          type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/app/gramc-meso-var
+          target: /app/gramc-meso/var/
+      - 
+          type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/app/data
+          target: /app/gramc-meso/data/
+      -
+          type: tmpfs
+          target: /var/run/apache2
+      -
+          type: tmpfs
+          target: /tmp
+    networks:
+      - gramc_bridge
+      - default
+
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.5'
+          memory: '2G'
+
+networks:  
+   gramc_bridge:
+      external: true
+
