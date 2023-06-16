@@ -1,9 +1,10 @@
+*.sql.gz
 */env.sh
+
 gramc-meso/containers/app/.env
 gramc-meso/containers/app/gramc-meso.conf
+gramc-meso/containers/app/gramc-meso-var/*
 gramc-meso/containers/app/var-log/apache2/*
-gramc-meso/containers/db/secrets/MARIADB_DATABASE
-gramc-meso/containers/db/secrets/MARIADB_PASSWORD
-gramc-meso/containers/db/secrets/MARIADB_ROOT_PASSWORD
-gramc-meso/containers/db/secrets/MARIADB_USER
+gramc-meso/containers/db/secrets/MARIADB_*
+gramc-meso/containers/db/mysql/*
 proxy/containers/acme/acme.sh/*
