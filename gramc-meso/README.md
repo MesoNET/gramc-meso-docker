@@ -3,17 +3,33 @@
 
 **Note** - Cette documentation est validée pour un host Debian 11 Bullseye
 
-Installations de docker en mode rootless
------
+**Note -** Pour installer plusieurs instances de `gramc-meso`, il suffit de copier le *répertoire* `gramc-meso`. Par exemple pour installer `gramc-meso-1`:
 
-- ALLEZ VOIR DANS LE RÉPERTOIRE `~/proxy` !
+```
+cp -a gramc-meso gramc-meso-toto
+```
 
-Configuration
+Puis suivre la documentation ci-dessous
+
+Configuration de gramc-meso
 -----
-- Éditez le fichier `env.sh` (nom, url, ...)
-- Editez les 4 fichiers se trouvant dans le répertoire `containers/db/secrets` (1 mot par fichier) (mots de passe, BD, etc)
-- Éditez le fichier `containers/app/.env`, bien sûr en cohérence avec les fichiers ci-dessus
-- Éditez le fichier `containers/app/gramc-meso.conf` (Servername, configuration iam)
+Copiez le fichier env-dist.sh:
+
+```
+cp -a env-dist.sh env.sh
+```
+
+Éditez le fichier `env.sh` (nom, url, ...)
+
+De même, copiez et éditez les 4 fichiers se trouvant dans le répertoire `containers/db/secrets` (1 mot par fichier) (mots de passe, BD, etc)
+
+Copiez et éditez le `containers/app/env-dist`, bien sûr en cohérence avec les fichiers ci-dessus:
+
+```
+cp -a env-dist .env
+```
+
+Copiez et éditez le fichier `containers/app/gramc-meso-dist.conf` (essentiellement Servername et configuration iam)
 
 Construction des conteneurs:
 -----
