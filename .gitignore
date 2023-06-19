@@ -1,6 +1,7 @@
 *.sql.gz
 */env.sh
 
+**/nginx/certs/
 gramc-meso/containers/app/.env
 gramc-meso/containers/app/gramc-meso.conf
 gramc-meso/containers/app/gramc-meso-var/*
