@@ -34,6 +34,9 @@ set -x
 chown $WWWDATA $GRAMCMESO_ROOT_DIR/containers/app/.env
 chmod 400 $GRAMCMESO_ROOT_DIR/containers/app/.env
 
+chown $ROOT $GRAMCMESO_ROOT_DIR/containers/app/gramc-meso.conf
+chmod 400 $GRAMCMESO_ROOT_DIR/containers/app/gramc-meso.conf
+
 chown -R $WWWDATA $GRAMCMESO_ROOT_DIR/containers/app/data/
 chmod -R o= $GRAMCMESO_ROOT_DIR/containers/app/data/
 

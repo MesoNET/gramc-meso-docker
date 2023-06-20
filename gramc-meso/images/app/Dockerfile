@@ -139,12 +139,7 @@ RUN cd /app/gramc-meso/public \
 # config de msmtp
 # cf. https://stackoverflow.com/questions/47247952/send-email-on-testing-docker-container-with-php-and-sendmail
 COPY msmtprc /etc/msmtprc
-#COPY msmtp.bash /usr/bin
-#RUN chmod 555 /usr/bin/msmtp.bash
 
-# On finit d'installer puis on lance entrypoint.sh
-COPY entrypoint.sh /
-RUN chmod u+rx /entrypoint.sh
-ENTRYPOINT ["/bin/bash","-c","/entrypoint.sh"]
-
+# lance apache en mode no daemon
+ENTRYPOINT ["/bin/bash","-c","source /etc/apache2/envvars && exec /usr/sbin/apache2 -DFOREGROUND"]
 
