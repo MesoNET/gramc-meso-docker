@@ -13,32 +13,21 @@ Puis suivre la documentation ci-dessous
 
 Configuration de gramc-meso
 -----
-Copiez le fichier env-dist.sh:
-
+1. Copiez le fichier env-dist.sh:
 ```
 cp -a env-dist.sh env.sh
 ```
-
-Éditez le fichier `env.sh` (nom, url, ...)
-
-De même, copiez et éditez les 4 fichiers se trouvant dans le répertoire `containers/db/secrets` (1 mot par fichier) (mots de passe, BD, etc)
-
-Copiez et éditez le `containers/app/env-dist`, bien sûr en cohérence avec les fichiers ci-dessus:
-
+2. Éditez le fichier `env.sh` (nom, url, ...)
+3. De même, copiez et éditez les 4 fichiers se trouvant dans le répertoire `containers/db/secrets` (1 mot par fichier) (mots de passe, BD, etc)
+4. Copiez et éditez le `containers/app/env-dist`, bien sûr en cohérence avec les fichiers ci-dessus:
 ```
 cp -a env-dist .env
 ```
-
-Copiez et éditez le fichier `containers/app/gramc-meso-dist.conf` (essentiellement Servername et configuration iam)
-
-Exécutez le script `permissions.sh` *en tant que root*:
-
+5. Copiez et éditez le fichier `containers/app/gramc-meso-dist.conf` (essentiellement Servername et configuration iam)
+6. Exécutez le script `permissions.sh` *en tant que root*:
 ```
 sudo ./permissions.sh
 ```
-
-
-
 -----
 
 Construction des conteneurs:
