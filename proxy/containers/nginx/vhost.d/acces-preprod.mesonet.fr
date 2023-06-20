@@ -11,23 +11,10 @@ location ^~ /.well-known/acme-challenge/ {
 #
 # Ajout a la main pour mesonet
 #
-# dev = ACCES RESTREINT
+# preprod = ACCES RESTREINT
 #
-# Les bureaux de Clement Ader
-allow 194.57.114.144/31;
-#
-# Le VPN Calmip
-allow 93.8.240.0/24;
-
-# # ruc-jarvis-calmip
-allow 193.50.45.80;
-#
-# # ruc-graham-calmip
-# allow 193.50.45.82;
-#
-# # ruc-nash-calmip
-# allow 193.50.45.81;
-#
+# Pourquoi autoriser cette IP ?
+# allow X.Y.Z.T/24;
 
 # Tout le reste est interdit
 deny all;
