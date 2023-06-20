@@ -2,6 +2,7 @@
 */env.sh
 
 **/nginx/certs/
+**/nginx/conf.d/
 gramc-meso/containers/app/.env
 gramc-meso/containers/app/gramc-meso.conf
 gramc-meso/containers/app/gramc-meso-var/*
