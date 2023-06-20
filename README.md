@@ -6,8 +6,7 @@ Ce dépôt propose une méthode d'installation de gramc-meso simple et rapide, u
 ## L'architecture générale
 
 Le schéma ci-dessous montre l'architecture générale de l'installation. Il est possible d'installer plusieurs instances de `gramc-meso`, par exemple pour des besoins de test.
-
-![](/home/manu/Documents/devt/gramc-meso-docker/architecture.drawio.png)
+![Schéma d'architecture de gramc-meso déployé par docker.](architecture.drawio.png)
 
 Installation de docker en mode rootless
 -----
