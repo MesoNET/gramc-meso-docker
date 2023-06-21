@@ -24,7 +24,8 @@ cp -a env-dist.sh env.sh
 cp -a env-dist .env
 ```
 5. Copiez et éditez le fichier `containers/app/gramc-meso-dist.conf` (essentiellement Servername et configuration iam)
-6. Exécutez le script `permissions.sh` *en tant que root*:
+6. Copiez et éditez le fichier `containers/app/parameters.yaml.dist` 
+7. Exécutez le script `permissions.sh` *en tant que root*:
 ```
 sudo ./permissions.sh
 ```

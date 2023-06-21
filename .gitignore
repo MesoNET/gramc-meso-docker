@@ -5,6 +5,7 @@
 **/nginx/conf.d/*.conf
 gramc-meso/containers/app/.env
 gramc-meso/containers/app/gramc-meso.conf
+gramc-meso/containers/app/parameters.yaml
 gramc-meso/containers/app/gramc-meso-var/*
 gramc-meso/containers/app/var-log/apache2/*
 gramc-meso/containers/db/secrets/MARIADB_*

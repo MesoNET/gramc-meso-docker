@@ -72,6 +72,10 @@ services:
           target: /etc/apache2/sites-available/gramc-meso.conf
       -
           type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/app/parameters.yaml 
+          target: /app/gramc-meso/config/parameters.yaml
+      -
+          type: bind
           source: ${GRAMCMESO_ROOT_DIR}/containers/app/var-log
           target: /var/log
       -
