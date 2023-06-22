@@ -82,6 +82,10 @@ services:
           type: bind
           source: ${GRAMCMESO_ROOT_DIR}/containers/app/gramc-meso-var
           target: /app/gramc-meso/var/
+      -
+          type: bind
+          source: ${GRAMCMESO_ROOT_DIR}/containers/app/public-documents
+          target: /app/gramc-meso/public/documents
       - 
           type: bind
           source: ${GRAMCMESO_ROOT_DIR}/containers/app/data

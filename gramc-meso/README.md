@@ -25,7 +25,8 @@ cp -a env-dist .env
 ```
 5. Copiez et éditez le fichier `containers/app/gramc-meso-dist.conf` (essentiellement Servername et configuration iam)
 6. Copiez et éditez le fichier `containers/app/parameters.yaml.dist` 
-7. Exécutez le script `permissions.sh` *en tant que root*:
+7. Copiez dans containers/app/public-documents les fichiers pdf qui devront être publiés (cga, cgu etc.)
+8. Exécutez le script `permissions.sh` *en tant que root*:
 ```
 sudo ./permissions.sh
 ```

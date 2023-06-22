@@ -3,11 +3,15 @@
 
 **/nginx/certs/
 **/nginx/conf.d/*.conf
-gramc-meso/containers/app/.env
-gramc-meso/containers/app/gramc-meso.conf
-gramc-meso/containers/app/parameters.yaml
-gramc-meso/containers/app/gramc-meso-var/*
-gramc-meso/containers/app/var-log/apache2/*
-gramc-meso/containers/db/secrets/MARIADB_*
-gramc-meso/containers/db/mysql/*
-proxy/containers/acme/acme.sh/*
+**/acme/acme.sh/*
+**/app/.env
+**/app/gramc-meso.conf
+**/app/parameters.yaml
+**/app/gramc-meso-var/*
+**/app/public-documents/*
+!**/app/public-documents/.ok
+**/app/var-log/apache2/*
+**/db/secrets/MARIADB_*
+**/db/mysql/*
+**/db/reprise/*
+!**/db/reprise/.ok

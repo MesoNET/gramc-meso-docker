@@ -28,6 +28,7 @@ ROOT="mesonet.mesonet"
 WWWDATA="100033.100033"
 MYSQL="100999.100999"
 
+echo
 echo "PERMISSIONS DANS LE REPERTOIRE dans containers/app"
 set -x
 
@@ -48,8 +49,12 @@ chmod -R o= $GRAMCMESO_ROOT_DIR/containers/app/gramc-meso-var/
 
 chown -R $ROOT $GRAMCMESO_ROOT_DIR/containers/app/var-log/
 chmod -R o= $GRAMCMESO_ROOT_DIR/containers/app/var-log/ 
+
+chown -R $ROOT $GRAMCMESO_ROOT_DIR/containers/app/public-documents
+chmod -R a=rX $GRAMCMESO_ROOT_DIR/containers/app/public-documents
 set +x
 
+echo
 echo "PERMISSIONS DANS LE REPERTOIRE dans containers/db"
 set -x
 

@@ -16,6 +16,8 @@ location ^~ /.well-known/acme-challenge/ {
 # Pourquoi autoriser cette IP ?
 # allow X.Y.Z.T/24;
 
+allow 93.8.240.25/32;
+allow 194.57.114.144;
 # Tout le reste est interdit
 deny all;
 
