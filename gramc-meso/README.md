@@ -64,7 +64,7 @@ Recharger la base de données:
 - *En root*, supprimez les données mysql et changez l'utilisateur du fichier de reprise:
 ```
 cd containers/db
-rm -r mysql/*
+sudo rm -r mysql/*
 chown 100999.100999 reprise/gramc.xxx.sql.gz
 ```
 - Redémarrez l'application par le script `run.sh`
@@ -72,6 +72,13 @@ chown 100999.100999 reprise/gramc.xxx.sql.gz
 ```
 docker compose logs -f
 ```
+
+Migrer la base de données:
+-----
+
+La démarche est la même que pour recharger la base de données, à part qu'on doit mettre le fichier de migration de la base de données *en plus* de la sauvegarde. De plus, ce fichier doit être exécuté *après* le chargement initial. Les fichiers sql sont exécutés en ordre alphabétique. Une convention de nommage qui fonctionne bien est:
+- Le nom du fichier de sauvegarde commence par `gramc-meso`
+- Le nom du fichier de migration commence par `migration`
 
 Entrer dans un conteneur pour déboguage:
 -----
