@@ -97,10 +97,23 @@ open /home/mesonet/gramc-meso/containers/app/.env: permission denied
 ```
 - La solution est de modifier provisoirement la permission de `.env`:
 ```
-sudo chmod go+r /home/mesonet/gramc-meso/containers/app/.env
+sudo chmod go+r /home/mesonet/gramc-meso-docker/gramc-meso/containers/app/.env
 docker compose exec bash
 ...
 exit
-sudo chmod go-r /home/mesonet/gramc-meso/containers/app/.env
+sudo chmod go-r /home/mesonet/gramc-meso-docker/gramc-meso/containers/app/.env
+```
+
+Vider le cache de Symfony
+-----
+Le cache est persistant, donc il ne suffit pas de redémarrer le conteneur pour le vider !
+
+Pour vider le cache:
+
+
+```
+sudo chmod go+r /home/mesonet/gramc-meso-docker/gramc-meso/containers/app/.env
+docker compose exec -u www-data app /app/gramc-meso/bin/console cache:clear
+sudo chmod go= /home/mesonet/gramc-meso-docker/gramc-meso/containers/app/.env
 ```
 
