@@ -25,6 +25,9 @@ DIR=$(dirname "$fullpath")
    # Construction des conteneurs
    [ $(basename $0) = 'build.sh' ] && docker compose build $* && exit 0;
 
+   # Tirage (? pull) des conteneurs
+   [ $(basename $0) = 'pull.sh' ] && docker compose pull $* && exit 0;
+
    # Arrêt et démarrage éventuel des conteneurs
    docker compose down
    [ $(basename $0) = 'run.sh' ] &&  docker compose up -d

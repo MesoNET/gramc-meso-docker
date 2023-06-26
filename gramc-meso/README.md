@@ -86,22 +86,7 @@ Entrer dans un conteneur pour déboguage:
 Utiliser la commande:
 
 ```
-docker compose exec
-```
-
-**ATTENTION** il y a un problème avec le conteneur app:
-
-```
-mesonet@portailmesonet:~/gramc-meso/containers/app$ docker compose exec -u www-data app bash
-open /home/mesonet/gramc-meso/containers/app/.env: permission denied
-```
-- La solution est de modifier provisoirement la permission de `.env`:
-```
-sudo chmod go+r /home/mesonet/gramc-meso-docker/gramc-meso/containers/app/.env
-docker compose exec bash
-...
-exit
-sudo chmod go-r /home/mesonet/gramc-meso-docker/gramc-meso/containers/app/.env
+docker compose exec app bash
 ```
 
 Vider le cache de Symfony
@@ -110,10 +95,7 @@ Le cache est persistant, donc il ne suffit pas de redémarrer le conteneur pour 
 
 Pour vider le cache:
 
-
 ```
-sudo chmod go+r /home/mesonet/gramc-meso-docker/gramc-meso/containers/app/.env
 docker compose exec -u www-data app /app/gramc-meso/bin/console cache:clear
-sudo chmod go= /home/mesonet/gramc-meso-docker/gramc-meso/containers/app/.env
 ```
 
