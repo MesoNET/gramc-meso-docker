@@ -47,40 +47,13 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends php8.0 php8.0-common \
     php8.0-cli libapache2-mod-php8.0 php8.0-mysql php8.0-sqlite3 php8.0-gd php8.0-xml php8.0-apcu php8.0-bcmath php8.0-bz2 php8.0-curl php8.0-dba php8.0-intl php8.0-mbstring  php8.0-soap php8.0-zip php8.0-tidy php8.0-imagick
 
-# Set up php sendmail config
-RUN echo "sendmail_path=/usr/bin/msmtp.bash -t" >> /etc/php/8.0/apache2/conf.d/php-sendmail.ini
-
 # Durcissement d'apache: le fichier security.conf peut être modifié pour agir sur le durcissement
 # Certaines directives utilisent le module headers
 RUN a2enmod headers
 COPY security.conf /etc/apache2/conf-available
 
-# Utile car on est derrière un reverse-proxy
-# On suppose que tous les conteneurs sont sur le réseau 172.0.0.0/8
-#RUN a2enmod remoteip
-#COPY remoteip.conf /etc/apache2/conf-available
-#RUN a2enconf remoteip
-
-# Conf hote virtuel par défaut - Utile pour le healthcheck
-#COPY 000-default.conf /etc/apache2/conf-available/
-#COPY index.php /var/www/html
-#RUN a2enconf 000-default.conf
-#RUN a2enmod status
-#COPY log_server_status.in /usr/local/bin
-
-# Etat de santé des conteneurs reposant sur apache/mysql
-#COPY index.php /var/www/html
-#COPY health.sh /usr/local/bin
-#HEALTHCHECK  CMD /usr/local/bin/health.sh | grep -q "$CONTAINER OK" || exit 1
-
 # On expose 80 pour http derriere un reverse proxy
 EXPOSE 80 
-
-# Suppression de /bin/su et autres paquets qui ne servent à rien ici
-# ATTENTION - En environnement Dev il sont utiles, notamment pour installer des choses
-#             Mais en prod, on n'installe rien !
-#RUN apt-get remove -y --allow-remove-essential util-linux
-#RUN apt-get autoremove -y
 
 # Création d'un utilisateur à qui appartiendront (presque) tous les fichiers
 RUN adduser --no-create-home --disabled-password --disabled-login  --gecos '' gramc-meso
@@ -97,7 +70,7 @@ RUN cd /app/gramc-meso && mkdir var data && chown -R www-data.www-data var data
 # Installation de composer
 RUN cd /usr/local/bin \
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+    && php -r "if (hash_file('sha384', 'composer-setup.php') === 'e21205b207c3ff031906575712edab6f13eb0b361f2085f1f1237b7126d785e826a450292b6cfd1d64d92e6563bbde02') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');"
 RUN cd /usr/local/bin && mv composer.phar composer
@@ -107,7 +80,6 @@ RUN cd /app/gramc-meso && sudo -u gramc-meso composer --no-scripts -n install
 
 # Configuration d'apache
 RUN cd /var/www/html && ln -s /app/gramc-meso/public gramc-meso
-###COPY ports.conf /etc/apache2
 COPY gramc-meso.conf /etc/apache2/sites-available
 RUN sed -i -e "s/SERVERNAME/ServerName ${GRAMCMESO_URL}/" /etc/apache2/sites-available/gramc-meso.conf
 RUN a2ensite gramc-meso && a2enmod rewrite && a2enmod ssl && a2enmod auth_openidc
@@ -119,8 +91,7 @@ RUN cd /app/gramc-meso/config && cp -a parameters.yaml.dist parameters.yaml
 
 # .env
 # ATTENTION - Avez-vous configuré .env ?
-COPY --chmod=444 .env /app/gramc-meso
-RUN chmod 444 /app/gramc-meso/.env
+COPY .env /app/gramc-meso
 
 # Logo etc...
 # Utilisez les logos proposés...
@@ -129,12 +100,6 @@ RUN cd /app/gramc-meso/public \
     && cp icones/banniere.png.dist icones/banniere.png \
     && cp icones/favicon.ico.dist icones/favicon.ico \
     && cp icones/header.png.dist icones/header.png
-
-###RUN apt-get install -y iputils-ping
-
-# ... Ou utilisez d'autres logos:
-#COPY colors.css /app/gramc-meso/public/css
-#COPY banniere.png favicon.ico header.png /app/gramc-meso/public/icones/
 
 # config de msmtp
 # cf. https://stackoverflow.com/questions/47247952/send-email-on-testing-docker-container-with-php-and-sendmail
