@@ -80,9 +80,14 @@ RUN cd /app/gramc-meso && sudo -u gramc-meso composer --no-scripts -n install
 
 # Configuration d'apache
 RUN cd /var/www/html && ln -s /app/gramc-meso/public gramc-meso
-COPY gramc-meso.conf /etc/apache2/sites-available
-RUN sed -i -e "s/SERVERNAME/ServerName ${GRAMCMESO_URL}/" /etc/apache2/sites-available/gramc-meso.conf
-RUN a2ensite gramc-meso && a2enmod rewrite && a2enmod ssl && a2enmod auth_openidc
+
+# On crée un gramc-meso.conf bidon, le vrai sera partagé par un volume docker
+# Mais on a besoin de ce fichier pour a2ensite !
+RUN touch /etc/apache2/sites-available/gramc-meso.conf \
+    && a2ensite gramc-meso \
+    && a2enmod rewrite \
+    && a2enmod ssl \
+    && a2enmod auth_openidc
 
 # index.php (provisoire)
 COPY index.php /app/gramc-meso/public
